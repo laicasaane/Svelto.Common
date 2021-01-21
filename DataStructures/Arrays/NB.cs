@@ -5,9 +5,9 @@ using Svelto.Common;
 
 namespace Svelto.DataStructures
 {
-    internal sealed class NBDebugProxy<T> where T : struct
+    sealed class NBDebugProxy<T> where T : struct
     {
-        private NB<T> m_Array;
+        NB<T> m_Array;
 
         public NBDebugProxy(NB<T> array)
         {
@@ -100,7 +100,7 @@ namespace Svelto.DataStructures
                 {
 #if DEBUG && !PROFILE_SVELTO
                     if (index >= _capacity)
-                        throw new Exception("NativeBuffer - out of bound access");
+                        throw new Exception($"NativeBuffer - out of bound access: index {index} - capacity {capacity}");
 #endif
                     var size = MemoryUtilities.SizeOf<T>();
                     ref var asRef = ref Unsafe.AsRef<T>((void*) (_ptr + (int) (index * size)));
